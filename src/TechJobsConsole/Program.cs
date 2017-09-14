@@ -60,10 +60,49 @@ namespace TechJobsConsole
 
                     List<Dictionary<string, string>> searchResults;
 
-                    // Fetch results
+                    // Fetch results----------------------------------------------------------------------------------------------------------
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                        int num = 0;
+
+
+
+                        foreach (string column in columnChoices.Keys)
+                        {
+                           
+
+                            if (column.Equals("all"))
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                
+                                searchResults = JobData.FindByValue(column, searchTerm.ToLower());
+                                if (searchResults.Count == 0)
+                                {
+                                    continue;
+                                }
+
+                                else
+                                {
+                                    num++;
+                                    PrintJobs(searchResults);
+                                   
+
+                                }
+
+                                
+                            }
+
+                        }
+                        if (num == 0)
+                        {
+                            Console.WriteLine(string.Format("***No results found for {0}***", searchTerm));
+                            
+                        }
+
+
                     }
                     else
                     {
@@ -118,7 +157,24 @@ namespace TechJobsConsole
 
         private static void PrintJobs(List<Dictionary<string, string>> someJobs)
         {
-            Console.WriteLine("printJobs is not implemented yet");
+            int i = 0;
+            Console.WriteLine("*****");
+            foreach (Dictionary<string, string> jobs in someJobs) 
+            {
+                foreach (KeyValuePair<string, string> kvp in jobs)
+                {   
+                    Console.WriteLine(kvp.Key+ ": "+ kvp.Value);
+                    i++;
+                }
+                if(i % 5 == 0)
+                {
+                    Console.WriteLine("*****");
+                    Console.WriteLine("      ");
+                }
+            }
+
+
+           
         }
     }
 }
